@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Links Vật Lý 11</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-2:#121a31;
+      --card:#18233f;
+      --card-2:#1f2d50;
+      --text:#eef4ff;
+      --muted:#a9b7d6;
+      --line:rgba(255,255,255,.10);
+      --blue:#7dd3fc;
+      --violet:#a78bfa;
+      --shadow:0 18px 45px rgba(0,0,0,.28);
+      --radius-xl:24px;
+      --radius-lg:18px;
+      --radius-md:14px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(125,211,252,.16), transparent 26%),
+        radial-gradient(circle at top right, rgba(167,139,250,.18), transparent 22%),
+        linear-gradient(180deg, #09101f 0%, #0f1831 100%);
+    }
+
+    a{color:inherit}
+    .container{
+      width:min(1200px, calc(100% - 32px));
+      margin:auto;
+    }
+
+    .hero{
+      padding:28px 0 18px;
+    }
+
+    .hero-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+      padding:32px;
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -80px -80px auto;
+      width:220px;
+      height:220px;
+      background:radial-gradient(circle, rgba(125,211,252,.24), transparent 65%);
+      pointer-events:none;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.04em;
+      padding:9px 14px;
+      border-radius:999px;
+      color:var(--blue);
+      background:rgba(125,211,252,.10);
+      border:1px solid rgba(125,211,252,.22);
+    }
+
+    h1{
+      margin:16px 0 10px;
+      font-size:clamp(30px, 5vw, 54px);
+      line-height:1.08;
+    }
+
+    .subtitle{
+      margin:0;
+      max-width:850px;
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.7;
+    }
+
+    .hero-bottom{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+      align-items:end;
+    }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+    }
+
+    .search-wrap{
+      flex:1 1 280px;
+      position:relative;
+    }
+
+    .search{
+      width:100%;
+      border:none;
+      outline:none;
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:15px 16px 15px 46px;
+      font-size:15px;
+    }
+
+    .search::placeholder{
+      color:#90a0c3;
+    }
+
+    .search-icon{
+      position:absolute;
+      left:15px;
+      top:50%;
+      transform:translateY(-50%);
+      opacity:.7;
+      font-size:16px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 18px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:700;
+      border:1px solid rgba(125,211,252,.22);
+      background:linear-gradient(135deg, rgba(125,211,252,.16), rgba(167,139,250,.14));
+      color:var(--text);
+      transition:.2s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(0,0,0,.22);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+
+    .stat{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:28px;
+      margin-bottom:4px;
+      color:var(--blue);
+    }
+
+    .stat span{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:14px;
+      margin:20px 0 14px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:24px;
+    }
+
+    .section-head p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .empty{
+      display:none;
+      padding:18px;
+      border-radius:18px;
+      border:1px dashed var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      text-align:center;
+      margin-bottom:14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:18px;
+      padding-bottom:40px;
+    }
+
+    .group{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      border-radius:24px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(24,35,63,.98), rgba(16,26,49,.96));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .group-header{
+      padding:20px 20px 14px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+    }
+
+    .group-top{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .group-icon{
+      width:52px;
+      height:52px;
+      flex:0 0 auto;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      font-size:24px;
+      background:linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.18));
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .group-title{
+      margin:0;
+      font-size:22px;
+      line-height:1.25;
+    }
+
+    .group-sub{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .group-list{
+      display:grid;
+      gap:12px;
+      padding:0 16px 16px;
+    }
+
+    .item{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:16px;
+      padding:14px;
+      transition:.2s ease;
+    }
+
+    .item:hover{
+      transform:translateY(-3px);
+      border-color:rgba(125,211,252,.35);
+      background:linear-gradient(180deg, rgba(125,211,252,.14), rgba(167,139,250,.10));
+    }
+
+    .item-row{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+
+    .item-badge{
+      width:38px;
+      height:38px;
+      flex:0 0 auto;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:#31456f;
+      border:1px solid rgba(255,255,255,.08);
+      font-size:18px;
+    }
+
+    .item-content{
+      min-width:0;
+      flex:1;
+    }
+
+    .item-title{
+      font-size:15px;
+      font-weight:700;
+      line-height:1.5;
+    }
+
+    .item-link{
+      margin-top:6px;
+      font-size:13px;
+      color:#d6ecff;
+      opacity:.9;
+    }
+
+    .footer{
+      padding:8px 0 40px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    @media (max-width: 1024px){
+      .hero-bottom{
+        grid-template-columns:1fr;
+      }
+      .grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media (max-width: 720px){
+      .container{
+        width:min(100% - 20px, 1200px);
+      }
+      .hero-card{
+        padding:22px;
+        border-radius:22px;
+      }
+      .grid{
+        grid-template-columns:1fr;
+      }
+      .stats{
+        grid-template-columns:1fr 1fr;
+      }
+      .group-title{
+        font-size:20px;
+      }
+    }
+
+    @media (max-width: 480px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+      .search{
+        padding-left:42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="hero-card">
+        <div class="badge">⚡ QUICK LINKS VẬT LÝ 11</div>
+        <h1>Kho học liệu số<br>được gom theo từng nhóm</h1>
+        <p class="subtitle">
+          Danh sách liên kết được chia thành 3 nhóm rõ ràng để cô tiện sử dụng:
+          <strong>Sơ đồ tư duy</strong>, <strong>Trò chơi</strong>, và <strong>Video mô phỏng</strong>.
+          Giao diện responsive, dùng tốt trên máy tính, máy tính bảng và điện thoại.
+        </p>
+
+        <div class="hero-bottom">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <span class="search-icon">🔎</span>
+              <input id="searchBox" class="search" type="text" placeholder="Tìm theo tên bài hoặc loại nội dung...">
+            </div>
+            <div class="top-actions">
+              <a class="btn" href="#groupsGrid">Xem danh sách</a>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>3</strong>
+              <span>Nhóm nội dung</span>
+            </div>
+            <div class="stat">
+              <strong>21</strong>
+              <span>Tổng liên kết</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section-head">
+      <div>
+        <h2>Danh sách học liệu</h2>
+        <p>Được sắp xếp theo nhóm để tìm nhanh và sử dụng thuận tiện hơn.</p>
+      </div>
+    </section>
+
+    <div id="emptyState" class="empty">Không tìm thấy nội dung phù hợp với từ khóa cô đang tìm.</div>
+
+    <main class="grid" id="groupsGrid">
+
+      <section class="group">
+        <div class="group-header">
+          <div class="group-top">
+            <div class="group-icon">🧠</div>
+            <div>
+              <h3 class="group-title">1. Sơ đồ tư duy</h3>
+              <p class="group-sub">7 liên kết</p>
+            </div>
+          </div>
+        </div>
+        <div class="group-list">
+          <a class="item" href="https://www.canva.com/design/DAHDhoxQZ18/FNUc1FkkDAFZE83rf2Hf8Q/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 8 – Mô tả sóng</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhv9x9GE/oE8tA09hZwBZfrBy5BMckQ/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 9 – Sóng ngang, sóng dọc và truyền năng lượng</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhpFECFw/Ht_ihaeuhQGm7wKWpW7iig/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 10 – Thực hành: Đo tần số của sóng âm</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhj4HK0E/SOb5kfWA-Bb7m0ojbDJSiA/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 11 – Sóng điện từ</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhvjmojk/iylLivKyaSx56LraKSw9zw/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 12 – Giao thoa sóng</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDh5lWVk4/gKh4nD2iA4HetaUaWlVyRw/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 12 – Nội dung Sóng dừng</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAG1TiZ9xdw/bGi7tIHfW1PggJGx0EjfUg/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🧠</div>
+              <div class="item-content">
+                <div class="item-title">Bài 15 – Thực hành: Đo tốc độ truyền âm</div>
+                <div class="item-link">Mở sơ đồ tư duy</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="group">
+        <div class="group-header">
+          <div class="group-top">
+            <div class="group-icon">🎮</div>
+            <div>
+              <h3 class="group-title">2. Trò chơi</h3>
+              <p class="group-sub">8 liên kết</p>
+            </div>
+          </div>
+        </div>
+        <div class="group-list">
+          <a class="item" href="https://www.canva.com/design/DAHDhhtQhSQ/cCXoqheqYEYUmnhzeGA1fA/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 8 – Mô tả sóng</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhiDUEtA/KOvSUGfQtB2ApUJ6b2r0SQ/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 9 – Thử thách Sóng cơ – Ai nhanh hơn?</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhh9O_70/8M8v7260RVIuCix65LDmzg/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 10 – Thách thức dao động kí – Săn sóng âm anh</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhpqr9GQ/hIQ5_Dv9asQruGWl4C2Vpg/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 11 – Giải mã sóng điện từ</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhgmnrTw/ybqPnrKRCVs8Pa_3jlZ7CA/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 12 – Cuộc chiến sóng thần</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhyiCgDo/Hx5ZJvV4ithLbIO4rNwu3g/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 12 – Khám phá sóng dừng</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDh19C6Wg/3pUIHljcdX2IGxGGT1-KxQ/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 14 – Đua xe công thức</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDh0knprk/fhn2tmH-DNg8GS8NlNUBLg/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎮</div>
+              <div class="item-content">
+                <div class="item-title">Bài 15 – Khám phá âm thanh</div>
+                <div class="item-link">Mở trò chơi</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="group">
+        <div class="group-header">
+          <div class="group-top">
+            <div class="group-icon">🎥</div>
+            <div>
+              <h3 class="group-title">3. Video mô phỏng</h3>
+              <p class="group-sub">6 liên kết</p>
+            </div>
+          </div>
+        </div>
+        <div class="group-list">
+          <a class="item" href="https://www.canva.com/design/DAHDhqtTf5o/PTM4gZGqrRvr3t2jcpUlLQ/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎥</div>
+              <div class="item-content">
+                <div class="item-title">Bài 8 – Mô tả sóng</div>
+                <div class="item-link">Mở video mô phỏng</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhiYjj9U/c_EoSU40mp0OTQfWVwyIXQ/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎥</div>
+              <div class="item-content">
+                <div class="item-title">Bài 9 – Sóng ngang, sóng dọc và truyền năng lượng</div>
+                <div class="item-link">Mở video mô phỏng</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhp1wNTU/8GGFTD2jSGpbqyjceBG_TA/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎥</div>
+              <div class="item-content">
+                <div class="item-title">Bài 10 – Thực hành: Đo tần số của sóng âm</div>
+                <div class="item-link">Mở video mô phỏng</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhiThYRs/TaqwR4uiGZeAkMQNAzjY3A/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎥</div>
+              <div class="item-content">
+                <div class="item-title">Bài 12 – Giao thoa sóng</div>
+                <div class="item-link">Mở video mô phỏng</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDhkdWtk0/4ebPWof8bzIHH51ejpcKeQ/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎥</div>
+              <div class="item-content">
+                <div class="item-title">Bài 12 – Nội dung Sóng dừng</div>
+                <div class="item-link">Mở video mô phỏng</div>
+              </div>
+            </div>
+          </a>
+
+          <a class="item" href="https://www.canva.com/design/DAHDh2rZ61s/qcFzm94ul1eH74uj0kpidw/edit" target="_blank" rel="noopener noreferrer">
+            <div class="item-row">
+              <div class="item-badge">🎥</div>
+              <div class="item-content">
+                <div class="item-title">Bài 15 – Thực hành: Đo tốc độ truyền âm</div>
+                <div class="item-link">Mở video mô phỏng</div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <div class="footer">
+      Giao diện quick links responsive • dùng 1 file HTML duy nhất
+    </div>
+  </div>
+
+  <script>
+    const searchBox = document.getElementById("searchBox");
+    const groups = document.querySelectorAll(".group");
+    const emptyState = document.getElementById("emptyState");
+
+    function normalizeText(text){
+      return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function filterContent(){
+      const q = normalizeText(searchBox.value.trim());
+      let visibleGroups = 0;
+
+      groups.forEach(group => {
+        const items = group.querySelectorAll(".item");
+        let visibleItems = 0;
+
+        items.forEach(item => {
+          const text = normalizeText(item.innerText || "");
+          const matched = !q || text.includes(q);
+          item.style.display = matched ? "block" : "none";
+          if(matched) visibleItems++;
+        });
+
+        group.style.display = visibleItems > 0 ? "flex" : "none";
+        if(visibleItems > 0) visibleGroups++;
+      });
+
+      emptyState.style.display = visibleGroups === 0 ? "block" : "none";
+    }
+
+    searchBox.addEventListener("input", filterContent);
+  </script>
+</body>
+</html>
